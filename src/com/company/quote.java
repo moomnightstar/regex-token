@@ -11,10 +11,10 @@ import java.io.FileReader;
 
 public class quote {
     static String direction;
-    String code;
-    String data;
-    String numble;
-    String price;
+    static String code;
+    static String date;
+    static String numble;
+    static String price;
 
     public static void main(String[] args) {
         // write your code here
@@ -33,14 +33,43 @@ public class quote {
         try{
             reader=new BufferedReader(new FileReader(file));
 
-            while((temp=reader.readLine())!=null){
+            if((temp=reader.readLine())!=null){
                 Matcher matcher= parseDir(temp);
                 if(matcher.find()){
                     //System.out.println("Found value:"+);
-                    direction=matcher.group(1);
-                    System.out.println(direction);
+                    direction=matcher.group(0);
+                    while((temp=reader.readLine())!=null){
+                        System.out.println(temp);
+                        System.out.print(direction+" ");
+                        matcher=parseCode(temp);
+                        if(matcher.find()){
+                            code=matcher.group(0);
+                            System.out.print(code+" ");
+                        }
+                        matcher=parseNumble(temp);
+                        if(matcher.find()){
+                            numble=matcher.group(0);
+                            System.out.print(numble+" ");
+                        }
+                        matcher=parseDate(temp);
+                        if(matcher.find()){
+                            date=matcher.group(0);
+                            System.out.print(date+" ");
+                        }
+                        matcher=parsePrice(temp);
+                        if(matcher.find()){
+                            price=matcher.group(0);
+                            System.out.print(price+" ");
+                        }
+                        else{
+
+                        }
+                        System.out.println("");
+                        //System.out.println(direction+" "+code+" "+numble+" "+date+" "+price);
+                    }
+
                 }else{
-                    System.out.println("no match");
+                    System.out.println("direction no match");
                 }
             }
         }
@@ -58,6 +87,7 @@ public class quote {
             }
         }
     }
+
     public static Matcher parseDir(String s){
         String rexp="ofr";
         Pattern pattern =Pattern.compile(rexp,Pattern.CASE_INSENSITIVE);
@@ -73,5 +103,36 @@ public class quote {
 也可以用Pattern.compile(rexp,Pattern.CASE_INSENSITIVE)表示整体都忽略大小写
          */
     }
+    public static Matcher parseCode(String s){
+        String code="[0-9]+\\.(IB|SH)";
+        Pattern pattern =Pattern.compile(code);
+        Matcher matcher =pattern.matcher(s);
+        return matcher;
+    }
+    public static Matcher parseNumble(String s){
+        String numble="[0-9]+W";
+        Pattern pattern =Pattern.compile(numble);
+        Matcher matcher =pattern.matcher(s);
+        return matcher;
+    }
+    public static Matcher parseDate(String s){
+        String date="[0-9]+(\\.[0-9]+)*(D|Y)(\\+[0-9]+(\\.[0-9]+)*(D|Y))*";
+        Pattern pattern =Pattern.compile(date);
+        Matcher matcher =pattern.matcher(s);
+        return matcher;
+    }
+    public static Matcher parsePrice(String s){
+        String price="[0-9]+\\.[0-9]+\\%";
+       
+        Pattern pattern =Pattern.compile(price);
+        Matcher matcher =pattern.matcher(s);
+        return matcher;
+    }
+    public static Matcher parsePrice2(String s){
 
+        String price2="估值([0-9]+\\.[0-9]+)";
+        Pattern pattern =Pattern.compile(price2);
+        Matcher matcher =pattern.matcher(s);
+        return matcher;
+    }
 }
