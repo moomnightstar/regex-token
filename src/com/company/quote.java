@@ -45,16 +45,24 @@ public class quote {
                         if(matcher.find()){
                             code=matcher.group(0);
                             System.out.print(code+" ");
-                        }
-                        matcher=parseNumble(temp);
-                        if(matcher.find()){
-                            numble=matcher.group(0);
-                            System.out.print(numble+" ");
+                        }else{
+                            System.out.print("(no code) ");
                         }
                         matcher=parseDate(temp);
                         if(matcher.find()){
                             date=matcher.group(0);
                             System.out.print(date+" ");
+                        }
+                        matcher=parseNumble(temp);
+                        if(matcher.find()){
+                            numble=matcher.group(0);
+                            System.out.print(numble+" ");
+                        }else{
+                            matcher=parseNumble2(temp);
+                            if(matcher.find()){
+                                numble=matcher.group(0);
+                                System.out.print(numble+"W ");
+                            }
                         }
                         matcher=parsePrice(temp);
                         if(matcher.find()){
@@ -62,7 +70,12 @@ public class quote {
                             System.out.print(price+" ");
                         }
                         else{
-
+                            matcher=parsePrice2(temp);
+                            if(matcher.find()){
+                                price=matcher.group(0);
+                                price=price.replaceAll("估值","")+"%";
+                                System.out.print(price+" ");
+                            }
                         }
                         System.out.println("");
                         //System.out.println(direction+" "+code+" "+numble+" "+date+" "+price);
@@ -90,27 +103,26 @@ public class quote {
 
     public static Matcher parseDir(String s){
         String rexp="ofr";
-        Pattern pattern =Pattern.compile(rexp,Pattern.CASE_INSENSITIVE);
+        Pattern pattern =Pattern.compile(rexp,Pattern.CASE_INSENSITIVE);//Pattern.compile(rexp,Pattern.CASE_INSENSITIVE)表示整体都忽略大小写
         Matcher matcher =pattern.matcher(s);
         return matcher;
 
-        /*
-        java正则表达式:
-  (?i)abc 表示abc都忽略大小写
-  a(?i)bc 表示bc忽略大小写
-  a((?i)b)c 表示只有b忽略大小写
-
-也可以用Pattern.compile(rexp,Pattern.CASE_INSENSITIVE)表示整体都忽略大小写
-         */
     }
     public static Matcher parseCode(String s){
-        String code="[0-9]+\\.(IB|SH)";
+        String code="([0-9]+\\.(IB|SH))|([0-9]{9})";
         Pattern pattern =Pattern.compile(code);
         Matcher matcher =pattern.matcher(s);
         return matcher;
     }
+
     public static Matcher parseNumble(String s){
         String numble="[0-9]+W";
+        Pattern pattern =Pattern.compile(numble);
+        Matcher matcher =pattern.matcher(s);
+        return matcher;
+    }
+    public static Matcher parseNumble2(String s){
+        String numble="[0-9]{4}";
         Pattern pattern =Pattern.compile(numble);
         Matcher matcher =pattern.matcher(s);
         return matcher;
@@ -129,7 +141,6 @@ public class quote {
         return matcher;
     }
     public static Matcher parsePrice2(String s){
-
         String price2="估值([0-9]+\\.[0-9]+)";
         Pattern pattern =Pattern.compile(price2);
         Matcher matcher =pattern.matcher(s);
