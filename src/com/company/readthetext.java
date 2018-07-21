@@ -16,6 +16,7 @@ public class readthetext {
 
 
     }
+
     public static void readtxtline(File file){
         BufferedReader reader=null;
         String temp=null;

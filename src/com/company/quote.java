@@ -1,7 +1,5 @@
 package com.company;
 
-
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.io.BufferedReader;
