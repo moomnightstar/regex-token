@@ -46,6 +46,7 @@ public class quote {
                             code=matcher.group(0);
                             System.out.print(code+" ");
                         }else{
+                            code="no code";
                             System.out.print("(no code) ");
                         }
                         matcher=parseDate(temp);
@@ -60,8 +61,8 @@ public class quote {
                         }else{
                             matcher=parseNumble2(temp);
                             if(matcher.find()){
-                                numble=matcher.group(0);
-                                System.out.print(numble+"W ");
+                                numble=matcher.group(0)+"W";
+                                System.out.print(numble+" ");
                             }
                         }
                         matcher=parsePrice(temp);

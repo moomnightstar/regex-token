@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.regex.*;
 
-public class Main {
+public class readthetext {
 
     public static void main(String[] args) {
         // write your code here
@@ -19,7 +19,6 @@ public class Main {
     public static void readtxtline(File file){
         BufferedReader reader=null;
         String temp=null;
-        int line=1;
         try{
             reader=new BufferedReader(new FileReader(file));
 
