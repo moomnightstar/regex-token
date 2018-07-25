@@ -3,7 +3,7 @@ package com.company;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class quote {
+public class Quote {
     public static String message;
     private static String direction;
     private static String code;
@@ -13,7 +13,7 @@ public class quote {
 
 
     public static void setMessage(String message) {
-        quote.message = message;
+        Quote.message = message;
     }
 
 

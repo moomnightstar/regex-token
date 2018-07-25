@@ -1,35 +1,27 @@
 package com.company;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.util.regex.*;
 import java.util.Map;
 import java.util.HashMap;
 
 
-public class readthetext {
+public class ReadTheText {
 
     public static void main(String[] args) {
-        // write your code here
-        //System.out.println(System.getProperty("user.dir"));//user.dir指定了当前的路径
-        File file=new File("./res/报价消息格式样本05.txt");
-        readtxtline(file);
-
-
+        readtxtline();
     }
 
-    public static void readtxtline(File file){
+    public static void readtxtline(){
         String[] head =new String[]{"代码","证券名称","最新评级", "剩余期限", "估值", "面值万"};
-        BufferedReader reader=null;
         String temp=null;
         Map map =new HashMap();
         StringBuffer err=new StringBuffer();
         Map<String,String> m=new HashMap<>();
         int line=0;
-        try{
-            reader=new BufferedReader(new FileReader(file));
 
+        try (FileInputStream inputStream=new FileInputStream(new File("./res/报价消息格式样本05.txt"))) {
+            BufferedReader reader=new BufferedReader(new InputStreamReader(inputStream));
             if((temp=reader.readLine())!=null){
                 String [] arr=temp.split("\\s+");
                 for(int i=0;i<head.length;i++){
@@ -68,19 +60,10 @@ public class readthetext {
                 System.out.println("");
             }
 
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage(), e);
         }
-        catch(Exception e){
-        e.printStackTrace();
-        }
-        finally{
-        if(reader!=null){
-            try{
-                reader.close();
-            }
-            catch(Exception e){
-                e.printStackTrace();
-            }
-        }
-    }
+
+
     }
 }

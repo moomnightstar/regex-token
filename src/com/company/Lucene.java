@@ -8,7 +8,7 @@ import org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 
 
-public class lucene {private static void doToken(TokenStream ts) throws IOException {
+public class Lucene {private static void doToken(TokenStream ts) throws IOException {
     ts.reset();
     CharTermAttribute cta = ts.getAttribute(CharTermAttribute.class);
     while (ts.incrementToken()) {
